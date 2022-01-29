@@ -1,0 +1,25 @@
+#coding = utf-8
+
+from selenium import webdriver
+import time
+import re
+
+opt = webdriver.ChromeOptions()
+# 1.新版本谷歌浏览器-解决控制提示
+opt.add_experimental_option("useAutomationExtension", False)
+opt.add_experimental_option("excludeSwitches", ['enable-automation'])
+
+driver = webdriver.Chrome(options=opt)
+driver.get("https://www.baidu.com/")
+time.sleep(2)
+driver.find_element_by_xpath("/html/body//div/form/span/input").send_keys("魅族")
+# driver.find_element_by_id('kw').send_keys("小米") #候选方法
+driver.find_element_by_xpath("//span[@class='bg s_btn_wr']/input").click()#点击按钮
+# driver.find_element_by_xpath("//input[@value='百度一下']").click()#候选方法
+# driver.find_element_by_xpath("//span[@class='bg s_btn_wr']/input[type='submit'][value='百度一下']").click()#候选方法,多条件匹配
+
+
+######备注
+# // 表示的是不管前面多少级都匹配（包含一级），/ 是只匹配一级 ，@ 符号表示的是取元素的属性后面紧跟的=内容就是这个值
+# 示例所表示的 就是匹配到这一级后的下一路径,也就是 [百度一下] 按钮的句柄, 再对其.click()点击即可
+# //span[@class='bg s_btn_wr']/input[type='submit'][value='百度一下'] 多条件匹配
